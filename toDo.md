@@ -15,6 +15,7 @@ pick up sticks
 -has an amount of sticks 
 -can remove sticks
 -has 2 players
+
 new game 
 -has a grid
 -players can move based on how many lives they have left

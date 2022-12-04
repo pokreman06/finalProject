@@ -3,7 +3,7 @@ dice
 -can reroll
 -has an int value
 yahtzee 
--has 3 dice
+-has 5 dice
 -has 2 players
 -has 2 sets of player scores
 players
