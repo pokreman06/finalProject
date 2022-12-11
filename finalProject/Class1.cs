@@ -63,14 +63,14 @@ public static class Sort
         newList = merge(func, list1, list2);
         if (!(isSorted(func, newList)))
         {
-        for (int x = 0; x < list.Count(); x++)
-        {
-            if (x < list.Count() / 2)
-                list1.Add(list[x]);
-            else
-                list2.Add(list[x]);
-        }
-        newList = merge(func, recursiveMerge(func, list1), recursiveMerge(func, list2));
+            for (int x = 0; x < list.Count(); x++)
+            {
+                if (x < list.Count() / 2)
+                    list1.Add(list[x]);
+                else
+                    list2.Add(list[x]);
+            }
+            newList = merge(func, recursiveMerge(func, list1), recursiveMerge(func, list2));
 
         }
 
@@ -104,36 +104,4 @@ public static class Sort
         }
         return finishedList;
     }
-    // public static List<int> MergeSort(Func<int, int, bool> sort, List<int> list)
-    // {
-    //     var start = DateTime.Now.Ticks;
-    //     int length = list.Count;
-    //     List<int[]> newList = new List<int[]>{};
-    //     for(int x=0; x<length/2; x++)
-    //     {
-    //         newList[x]
-    //     }
-    //     // foreach(int x in list)
-    //     // {
-    //     //     newList.Add(new int[1]{x});
-    //     // }
-    //     // for(int x = 2; x<listLength; x=x*2)
-    //     // {
-    //     //     var NewList = new List<int[]>{};
-    //     //     for(int b = 1; b<2*listLength/x; b++)
-    //     //     {
-    //     //     var newArray = new int[x];
-    //     //         for(int d = 0; d<x; d++)
-    //     //         {
-    //     //             int newNum;
-    //     //             if(newList[b].Length==x)
-    //     //             newArray[d]=
-    //     //         }
-    //     //     }
-    //     // }
-
-    //     var end = DateTime.Now.Ticks;
-    //     System.Console.WriteLine(end-start);
-    //     return new List<int>{};
-    // }
 }

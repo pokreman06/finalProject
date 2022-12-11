@@ -1,3 +1,4 @@
+the goal of this app is to create a fun webapp that can be used to play games each of the classes and structs have their purpose as defined below.
 dice
 -can roll 
 -can reroll
@@ -17,6 +18,6 @@ new game
 -has a grid
 -players can move based on how many lives they have left
 -players can move
-Game interface
+Game
 - has a score for each player
 - has an is over function

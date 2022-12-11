@@ -1,7 +1,7 @@
 namespace finalProject;
 public class PickUpSticks : Game<int>
 {
-    public int sticks;
+    public int sticks { get; set; }
     public PickUpSticks(Player[] players, int startingSticks = 10) : base(players, 0)
     {
         sticks = startingSticks;
@@ -12,7 +12,7 @@ public class PickUpSticks : Game<int>
         {
             sticks -= sticksRemoved;
             Score[Players[currentPlayer]] += sticksRemoved;
-            
+
             if (sticks <= 0)
             {
                 IsOver();
@@ -22,7 +22,7 @@ public class PickUpSticks : Game<int>
         }
         return false;
     }
-    public override void IsOver()
+    public override void IsOver() // REQUIREMENT #8 second example of polymorphism
     {
         Players[currentPlayer].HasWon(Score.GetValueOrDefault(Players[currentPlayer]));
         isOver = true;

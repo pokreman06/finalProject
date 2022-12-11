@@ -1,9 +1,9 @@
 namespace finalProject;
-public class Player
+public class Player : iperson, igamer
 {
-    string name {get; init;}
-    int points =0;
-    static int numberOfPlayers = 1;
+    public string name { get; init; }
+    public int points { get; set; } = 0;
+    static int numberOfPlayers { get; set; } = 1;
     public Player()
     {
         name = "player" + numberOfPlayers;

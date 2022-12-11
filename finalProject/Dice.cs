@@ -1,8 +1,8 @@
 ﻿namespace finalProject;
-public class Dice
+public class Dice // REQUIREMENT #1 a class
 {
-    public int value {get; set;}
-    Random rand = new Random();
+    public int value { get; set; }
+    Random rand { get; set; } = new Random();
 
     public Dice()
     {
@@ -12,6 +12,6 @@ public class Dice
     {
         value = rand.Next(1, 7);
     }
-    
+
 
 }

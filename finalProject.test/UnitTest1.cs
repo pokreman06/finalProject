@@ -14,7 +14,7 @@ public class Tests
         Assert.AreEqual("(2, 3)", point.ToString());
     }
     [Test]
-    public void NewGame()
+    public void NewGameTest()
     {
         var player1 = new Player();
         var player2 = new Player();
@@ -130,5 +130,15 @@ public class Tests
         Assert.IsTrue(game.fourOf(3, new int[] { 2, 2, 4, 2, 1 }));
         System.Console.WriteLine(2);
     }
-
+    [Test]
+    public void sort()
+    {
+        var p1 = new Player();
+        var p2 = new Player();
+        var game = new Yahtzee(new Player[] { p1, p2 });
+        game.Select(yatChoice.two);
+        Assert.IsTrue(game.Score[p1].ContainsKey("2"));
+        System.Console.WriteLine(2);
+    }
+    
 }

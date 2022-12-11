@@ -2,13 +2,13 @@
 
 <PageTitle>PickUpSticks</PageTitle>
 <p>@game.sticks sticks remain. player #@(game.currentPlayer+1)</p>
-@if(!game.isOver)
+@if (!game.isOver)
 {
-<button @onclick="()=>{game.Iterate(1);}">remove 1 stick</button>
-<button @onclick="()=>{game.Iterate(2);}">remove 2 sticks</button>
-<button @onclick="()=>{game.Iterate(3);}">remove 3 sticks</button>
+    <button @onclick="()=>{game.Iterate(1);}">remove 1 stick</button>
+    <button @onclick="()=>{game.Iterate(2);}">remove 2 sticks</button>
+    <button @onclick="()=>{game.Iterate(3);}">remove 3 sticks</button>
 }
-@if(game.isOver)
+@if (game.isOver)
 {
     <p>congrats player @(game.currentPlayer+1)</p>
 }

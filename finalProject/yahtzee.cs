@@ -30,24 +30,24 @@ public class Yahtzee : Game<Dictionary<string, int>>
             return result;
         }
     }
-        public override string ToString()
+    public override string ToString() // REQUIREMENT #7 polymorphism
+    {
+        string result = $@"Player1 {score(Players[0])}
+";
+        foreach (KeyValuePair<string, int> x in Score[Players[0]])
         {
-            string result = $@"Player1 {score(Players[0])}
+            result += $@"{x.Key}: {x.Value}
 ";
-            foreach(KeyValuePair<string, int> x in Score[Players[0]])
-            {
-                result += $@"{x.Key}: {x.Value}
-";
-            }
-            result += $@"Player2 {score(Players[1])}
-";
-            foreach(KeyValuePair<string, int> x in Score[Players[1]])
-            {
-                result += $@"{x.Key}: {x.Value}
-";
-            }
-            return result;
         }
+        result += $@"Player2 {score(Players[1])}
+";
+        foreach (KeyValuePair<string, int> x in Score[Players[1]])
+        {
+            result += $@"{x.Key}: {x.Value}
+";
+        }
+        return result;
+    }
     public bool Select(yatChoice input, yatChoice? secondary = null)
     {
         Func<bool>? dee = input switch
@@ -76,13 +76,13 @@ public class Yahtzee : Game<Dictionary<string, int>>
             ,
             yatChoice.chance => () => { return chance(); }
             ,
-            _=>null,
-            
+            _ => null,
+
         };
         bool isFull = input switch
         {
             yatChoice.full => Score[Players[currentPlayer]].ContainsKey("full"),
-            yatChoice.large =>Score[Players[currentPlayer]].ContainsKey("large"),
+            yatChoice.large => Score[Players[currentPlayer]].ContainsKey("large"),
             yatChoice.small => Score[Players[currentPlayer]].ContainsKey("small"),
             yatChoice.fourOf => Score[Players[currentPlayer]].ContainsKey("4of"),
             yatChoice.threeof => Score[Players[currentPlayer]].ContainsKey("3of"),
@@ -94,69 +94,69 @@ public class Yahtzee : Game<Dictionary<string, int>>
             yatChoice.six => Score[Players[currentPlayer]].ContainsKey("6"),
             yatChoice.chance => Score[Players[currentPlayer]].ContainsKey("chance"),
             yatChoice.yahtzee => Score[Players[currentPlayer]].ContainsKey("yahtzee"),
-            _=>false
+            _ => false
         };
         if (input == yatChoice.yahtzee)
-            {
-                (int? value, string? key) passthrough = secondary switch
-                {
-                    yatChoice.full => (25, "full")
-            ,
-            yatChoice.large => (40, "large")
-            ,
-            yatChoice.small => (30,"small")
-            ,
-            yatChoice.fourOf => (null, "4of")
-            ,
-            yatChoice.threeof => (null, "3of")
-            ,
-            yatChoice.one => (5, "1")
-            ,
-            yatChoice.two => (10, "2")
-            ,
-            yatChoice.three => (15, "3")
-            ,
-            yatChoice.four => (20, "4")
-            ,
-            yatChoice.five => (25, "5")
-            ,
-            yatChoice.six => (30, "6")
-            ,
-            yatChoice.chance => (null, "chance")
-            ,
-            _ => (null, null)
-            
-                };
-                
-            dee = () => {return yahtzee(maxValue: passthrough.value, location: passthrough.key);};
-            }
-            if(isFull)
-            {
-                throw new Exception("formerly used value invalid input");
-            }
-            else 
-            {
-                return dee();
-
-            }
-    }
-    public static int countinlist<T>(T[] list,  T[] possible)
-    {
-        int gcount=0;
-
-        foreach(T x in possible)
         {
-            int count =0;
-            foreach(T y in list)
+            (int? value, string? key) passthrough = secondary switch
             {
-                if(x!.Equals(y))
+                yatChoice.full => (25, "full")
+        ,
+                yatChoice.large => (40, "large")
+        ,
+                yatChoice.small => (30, "small")
+        ,
+                yatChoice.fourOf => (null, "4of")
+        ,
+                yatChoice.threeof => (null, "3of")
+        ,
+                yatChoice.one => (5, "1")
+        ,
+                yatChoice.two => (10, "2")
+        ,
+                yatChoice.three => (15, "3")
+        ,
+                yatChoice.four => (20, "4")
+        ,
+                yatChoice.five => (25, "5")
+        ,
+                yatChoice.six => (30, "6")
+        ,
+                yatChoice.chance => (null, "chance")
+        ,
+                _ => (null, null)
+
+            };
+
+            dee = () => { return yahtzee(maxValue: passthrough.value, location: passthrough.key); };
+        }
+        if (isFull)
+        {
+            throw new Exception("formerly used value invalid input"); // REQUIREMENT #9 part one throwing exception
+        }
+        else
+        {
+            return dee();
+
+        }
+    }
+    public static int countinlist<T>(T[] list, T[] possible) // REQUIREMENT #12 a static member function
+    {
+        int gcount = 0;
+
+        foreach (T x in possible)
+        {
+            int count = 0;
+            foreach (T y in list)
+            {
+                if (x!.Equals(y))
                 {
                     count++;
                 }
             }
-            if(count>=gcount)
+            if (count >= gcount)
             {
-                gcount=count;
+                gcount = count;
             }
         }
         return gcount;
@@ -165,16 +165,17 @@ public class Yahtzee : Game<Dictionary<string, int>>
     {
         if (testList == null)
             testList = dice;
-        if(countinlist<int>((int[])testList, new int[]{1,2,3,4,5,6})>=fot)
+        if (countinlist<int>((int[])testList, new int[] { 1, 2, 3, 4, 5, 6 }) >= fot)
         {
-            Score[Players[currentPlayer]].Add(fot+" of", testList.Sum());
+            Score[Players[currentPlayer]].Add(fot + " of", testList.Sum());
             return true;
         }
-        else{
-            Score[Players[currentPlayer]].Add(fot+" of", 0);
+        else
+        {
+            Score[Players[currentPlayer]].Add(fot + " of", 0);
             return false;
         }
-        
+
 
     }
     public bool LargeStraight(int[]? testList = null)
@@ -202,10 +203,10 @@ public class Yahtzee : Game<Dictionary<string, int>>
             testList = dice;
         var sortedlist = Sort.recursiveMerge((int x, int y) => x >= y, testList.ToList());
         bool test1 = true;
-        for(int x = 1; x<5; x++)
+        for (int x = 1; x < 5; x++)
         {
-            if(sortedlist[x]==sortedlist[x-1])
-                sortedlist[x]=-1;
+            if (sortedlist[x] == sortedlist[x - 1])
+                sortedlist[x] = -1;
         }
         sortedlist = Sort.recursiveMerge((int x, int y) => x >= y, sortedlist);
         for (int x = 1; x < 3; x++)
@@ -336,21 +337,21 @@ public class Yahtzee : Game<Dictionary<string, int>>
     }
 
     public int score(Player selectedPlayer)
+    {
+        int total = 0;
+        int bonus = 0;
+        foreach (KeyValuePair<string, int> curr in Score[selectedPlayer])
         {
-            int total = 0;
-            int bonus = 0;
-            foreach (KeyValuePair<string, int> curr in Score[selectedPlayer])
+            if (int.TryParse(curr.Key, out int x))
             {
-                if (int.TryParse(curr.Key, out int x))
-                {
-                    bonus += curr.Value;
-                }
-                if (bonus > 62)
-                {
-                    total += 35;
-                }
-                total += curr.Value;
+                bonus += curr.Value;
             }
-            return total;
+            if (bonus > 62)
+            {
+                total += 35;
+            }
+            total += curr.Value;
         }
+        return total;
+    }
 }

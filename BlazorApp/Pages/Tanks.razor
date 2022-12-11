@@ -1,53 +1,59 @@
 @page "/tanks"
 
 <PageTitle>tanks</PageTitle>
-@if(!game.isOver)
+@if (!game.isOver)
 {
-<div>
-<p>player #@(game.currentPlayer+1) must hide and player #@(2-game.currentPlayer) will attempt to hit them</p>
-<p>
-    input the x:
-    <input @bind="x" type="number">
+    <div>
+        <p>player #@(game.currentPlayer+1) must hide and player #@(2-game.currentPlayer) will attempt to hit them</p>
+        <p>
+            input the x:
+            <input @bind="x" type="number">
 
-</p>
+        </p>
 
-<p>
-    input the y:
-    <input @bind="y" type="number">
-</p>
+        <p>
+            input the y:
+            <input @bind="y" type="number">
+        </p>
 
-@if(tomove==moveOrFire.move)
-{
-<p>your current location is @game.GetPlayerlocation(game.currentPlayer).ToString()</p>
-<p>your opponents last location was @game.GetPlayerlocation(1-game.currentPlayer).ToString()</p>
-<button @onclick="()=>{if(game.Move((x, y))){tomove=moveOrFire.fire; x=0; y=0; succeded=true;}else{succeded=false;}}">player #@(game.currentPlayer+1) move </button>
+        @if (tomove == moveOrFire.move)
+        {
+            <p>your current location is @game.GetPlayerlocation(game.currentPlayer).ToString()</p>
+            <p>your opponents last location was @game.GetPlayerlocation(1-game.currentPlayer).ToString()</p>
+            <button
+        @onclick="()=>{if(game.Move((x, y))){tomove=moveOrFire.fire; x=0; y=0; succeded=true;}else{succeded=false;}}">player
+                #@(game.currentPlayer+1) move </button>
 
-} else{
-    <button @onclick="()=>{if(game.fire((x, y))){tomove=moveOrFire.move; x=0; y=0; succeded=true;}else{succeded=false;}}">player #@(2-game.currentPlayer) fire </button>
+        }
+        else
+        {
+            <button
+        @onclick="()=>{if(game.fire((x, y))){tomove=moveOrFire.move; x=0; y=0; succeded=true;}else{succeded=false;}}">player
+                #@(2-game.currentPlayer) fire </button>
+        }
+        @if (!succeded)
+        {
+            <p>invalid input please select another</p>
+        }
+        <p>player1 lives: @game.Score[game.Players[0]]</p>
+        <p>player2 lives: @game.Score[game.Players[1]]</p>
+    </div>
 }
-@if(!succeded)
-{
-    <p>invalid input please select another</p>
-}
-<p>player1 lives: @game.Score[game.Players[0]]</p>
-<p>player2 lives: @game.Score[game.Players[1]]</p>
-</div>
-} 
-@if(game.isOver)
+@if (game.isOver)
 {
     <p>congrats player #@(game.currentPlayer+1) you won!</p>
 }
 @code {
-    int x = 0;
-    int y = 0;
-    bool succeded=true;
-    moveOrFire tomove = moveOrFire.move;
-    Player p1 = new Player();
-    Player p2 = new Player();
-    NewGame game;
+    int x { get; set; } = 0;
+    int y { get; set; } = 0;
+    bool succeded { get; set; } = true;
+    moveOrFire tomove { get; set; } = moveOrFire.move;
+    Player p1 { get; set; } = new Player();
+    Player p2 { get; set; } = new Player();
+    NewGame game { get; set; }
     public Tanks()
     {
         game = new NewGame(new Player[] { p1, p2 });
     }
     enum moveOrFire { move, fire }
-}((byte)
+}
