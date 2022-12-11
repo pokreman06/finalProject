@@ -1,31 +1,30 @@
 namespace finalProject;
-public class PickUpSticks
+public class PickUpSticks : Game<int>
 {
-    Player[] Players;
-    int sticks;
-    int currentPlayer=0;
-    public PickUpSticks(Player[] players, int startingSticks)
+    public int sticks;
+    public PickUpSticks(Player[] players, int startingSticks = 10) : base(players, 0)
     {
-        Players = players;
         sticks = startingSticks;
     }
-    public (bool valid, bool HasWon) Iterate(int sticksRemoved)
+    public bool Iterate(int sticksRemoved)
     {
-        var hasWon = false;
-        if(sticksRemoved>0&&sticksRemoved<=3&&sticksRemoved<=sticks)
+        if (sticksRemoved > 0 && sticksRemoved <= 3 && sticksRemoved <= sticks)
         {
             sticks -= sticksRemoved;
-            if(sticks == 0)
+            Score[Players[currentPlayer]] += sticksRemoved;
+            
+            if (sticks <= 0)
             {
-                hasWon=true;
+                IsOver();
             }
-            if(currentPlayer==0)
-                currentPlayer=1;
-            else
-                currentPlayer=0;
-
-            return (true, hasWon);
+            changePlayer();
+            return true;
         }
-        return (false, false);
+        return false;
+    }
+    public override void IsOver()
+    {
+        Players[currentPlayer].HasWon(Score.GetValueOrDefault(Players[currentPlayer]));
+        isOver = true;
     }
 }

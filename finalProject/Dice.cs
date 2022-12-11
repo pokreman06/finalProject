@@ -1,16 +1,16 @@
 ﻿namespace finalProject;
 public class Dice
 {
-    int value;
+    public int value {get; set;}
     Random rand = new Random();
 
     public Dice()
     {
-        value = rand.Next(1, 6);
+        value = rand.Next(1, 7);
     }
     public void reroll()
     {
-        value = rand.Next(1, 6);
+        value = rand.Next(1, 7);
     }
     
 

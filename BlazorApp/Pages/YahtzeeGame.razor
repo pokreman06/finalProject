@@ -1,0 +1,118 @@
+@page "/yahtzee"
+
+<PageTitle>yahtzee</PageTitle>
+<h1>Yahtzee</h1>
+<div>
+    @if(!yahtzee.isOver)
+    {
+    <p>@(2-count) rolls left</p>
+    <p>current player is player #@(yahtzee.currentPlayer+1)</p>
+@for(int x = 0; x<5; x++)
+{
+    int w = x;
+    <section>
+        <button @onclick="()=>{if(!diceToReroll.Contains(w)) {diceToReroll.Add(w);} else {diceToReroll.Remove(w);}}" >Reroll dice @yahtzee.Dice[w].value</button>
+        @if(diceToReroll.Contains(w))
+        {
+        <div>reroll</div>
+        }
+    </section>
+}
+<p>current dice selected @displayDice()</p>
+@if(count<2)
+{
+<button @onclick="()=>{yahtzee.DiceReroll(diceToReroll); count++;}">reroll Dice</button>
+} else {
+
+    <input @bind=input />
+    <button @onclick="submitt">submit</button>
+}
+    }else
+    {
+        <p>player #@(yahtzee.currentPlayer+1) won</p>
+    }
+@foreach (string line in yahtzee.ToString().Split(@"
+"))
+{
+    <p>@line</p>
+}
+</div>
+@code {
+    string input = "";
+    yatChoice? Input;
+    int count=0;
+    Player p1 = new Player();
+    Player p2 = new Player();
+    List<int> diceToReroll= new List<int>{};
+
+    Yahtzee yahtzee;
+
+    public YahtzeeGame()
+    {
+        yahtzee = new Yahtzee(new Player[]{p1, p2});
+    }
+    void submitt()
+    {
+        submit();
+        try{
+        if(Input!=null)
+        {
+        yahtzee.Select((yatChoice)Input);
+        yahtzee.changePlayer(); 
+        count = 0;
+        yahtzee.DiceReroll(new List<int> {0,1,2,3,4});
+        }
+        }
+        catch (Exception yee){
+        input = yee.Message;
+        }
+        Input=null;
+        diceToReroll=new List<int>{};
+        if(yahtzee.Score[yahtzee.Players[1]].Count()==14)
+        {
+            yahtzee.IsOver();
+        }
+    }
+    void submit()
+    {
+        Input = input.ToLower() switch
+        {
+           "full"=>yatChoice.full
+            ,
+            "large"=>yatChoice.large
+            ,
+            "small"=>yatChoice.small 
+            ,
+            "four of"=>yatChoice.fourOf 
+            ,
+            "three of"=>yatChoice.threeof 
+            ,
+            "one"=>yatChoice.one
+            ,
+            "two"=>yatChoice.two
+            ,
+            "three"=>yatChoice.three
+            ,
+            "four"=>yatChoice.four
+            ,
+            "five"=>yatChoice.five
+            ,
+            "six"=>yatChoice.six
+            ,
+            "chance"=>yatChoice.chance
+            ,
+            "yahtzee"=>yatChoice.yahtzee
+            ,
+            _=>null, 
+        };
+    }
+    public string displayDice()
+    {
+        string result = "|";
+        foreach(int x in diceToReroll)
+        {
+            result +=x+1 + "|";
+        }
+        return result;
+    }
+}
